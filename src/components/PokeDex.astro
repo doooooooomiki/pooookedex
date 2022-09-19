@@ -1,0 +1,81 @@
+---
+
+---
+
+<poke-déx></poke-déx>
+
+<script>
+  class PokeDex extends HTMLElement {
+    constructor() {
+      super();
+      this._pokeNames = null;
+
+      const form = document.createElement('form');
+
+      const input = document.createElement('input');
+      input.setAttribute('type', 'text');
+
+      const button = document.createElement('button');
+      button.setAttribute('type', 'submit');
+      button.innerText = 'submit';
+
+      this.appendChild(form);
+      form.appendChild(input);
+      form.appendChild(button);
+    }
+
+    set pokeNames(val) {
+      this._pokeNames = val;
+    }
+
+    get pokeNames() {
+      return this._pokeNames;
+    }
+
+    get form() {
+      return this.querySelector('form');
+    }
+
+    get input() {
+      return this.querySelector('input');
+    }
+
+    async fetchPokeNames() {
+      const url = '/public/pokemon-names.json';
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }
+
+    async fetchPokemonById(id) {
+      const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }
+
+    async searchForIdByName(name) {
+      const allPokemon = await this.pokeNames;
+      const findPokemonByName = pokemon => pokemon.name.toLowerCase() === name;
+      const foundling = allPokemon.find(findPokemonByName);
+      return foundling.pokemon_species_id;
+    }
+
+    async onSubmit(event) {
+      event.preventDefault();
+      const pokename = this.input.value.toLowerCase();
+      const id = await this.searchForIdByName(pokename);
+      const data = await this.fetchPokemonById(id);
+      // todo: data processing
+      console.log('data', data);
+      console.log('sprite', data.sprites.front_default);
+    }
+
+    connectedCallback() {
+      this.form.addEventListener('submit', this.onSubmit.bind(this));
+      this.pokeNames = this.fetchPokeNames();
+    }
+
+  }
+  customElements.define("poke-déx", PokeDex);
+</script>
