@@ -1,5 +1,108 @@
 @import "./base/reset.css";
 
-h1 {
-  color: red;
+:root {
+  --keyboard-height: 200px;
+  --key-bg: #565758;
+  --key-text-color: #ffffff;
+  --header-height: 40px;
+  --game-max-width: 500px;
+  --color-background: #121213;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-color: var(--color-background);
+  overflow-y: hidden;
+}
+
+header {
+  height: var(--header-height);
+}
+
+poke-dex {
+  width: 100%;
+  max-width: var(--game-max-width);
+  margin: 0 auto;
+  height: calc(100% - var(--header-height));
+  display: flex;
+  flex-direction: column;
+}
+
+poke-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+poke-input {
+  display: block;
+  height: 58px;
+  margin: 0 8px 8px;
+  user-select: none;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 24px;
+  text-transform: capitalize;
+  color: var(--key-text-color);
+}
+
+poke-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+poke-keyboard {
+  display: block;
+  height: var(--keyboard-height);
+  margin: 0 8px;
+  user-select: none;
+}
+
+poke-keyboard .row {
+  display: flex;
+  width: 100%;
+  margin: 0 auto 8px;
+}
+
+poke-keyboard button {
+  font-family: inherit;
+  font-weight: bold;
+  border: 0;
+  padding: 0;
+  margin: 0 6px 0 0;
+  height: 58px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--key-bg);
+  color: var(--key-text-color);
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+}
+
+poke-keyboard button {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+poke-keyboard button:last-of-type {
+  margin: 0;
+}
+
+poke-keyboard .small {
+  flex: 0.5;
+}
+
+poke-keyboard .big {
+  flex: 1.5;
+  font-size: 12px;
 }
