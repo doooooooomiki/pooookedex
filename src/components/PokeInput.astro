@@ -1,0 +1,23 @@
+---
+
+---
+
+<poke-input poke-value=""></poke-input>
+
+<script>
+  class PokeInput extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    static get observedAttributes() { 
+      return ['poke-value'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.innerText = newValue;
+    }
+
+  }
+  customElements.define("poke-input", PokeInput);
+</script>
