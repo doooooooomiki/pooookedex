@@ -45,7 +45,7 @@ import PokeKeyboard from "./PokeKeyboard.astro";
     }
 
     async fetchPokeNames() {
-      const url = '/public/pokemon-names.json';
+      const url = '/pokemon-names.json';
       const response = await fetch(url);
       const data = await response.json();
       return data;
