@@ -1,0 +1,28 @@
+---
+
+---
+
+<poke-display poke-src="">
+  <img src="" alt="">
+</poke-display>
+
+<script>
+   class PokeDisplay extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    get img() {
+      return this.querySelector('img');
+    }
+
+    static get observedAttributes() { 
+      return ['poke-src'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.img.setAttribute('src', newValue);
+    }
+  }
+  customElements.define("poke-display", PokeDisplay);
+</script>
