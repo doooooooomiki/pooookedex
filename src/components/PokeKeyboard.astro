@@ -55,7 +55,8 @@
     }
 
     onPointerDown(e) {
-      navigator.vibrate(42);
+      if ('vibrate' in navigator) navigator.vibrate(42);
+
       const type = e.currentTarget.dataset.type;
       const key = e.currentTarget.dataset.key;
       this.dispatchEvent(new CustomEvent(`poke${type}down`, {
