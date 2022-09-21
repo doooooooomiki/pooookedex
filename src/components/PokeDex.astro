@@ -44,42 +44,45 @@ import PokeKeyboard from "./PokeKeyboard.astro";
       return this.querySelector('poke-input');
     }
 
-    async fetchPokeNames() {
+    async fetchPokemonNames() {
       const url = '/pokemon-names.json';
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
+      const res = await fetch(url);
+      return res.ok 
+        ? await res.json()
+        : Promise.reject(new Error(`${res.status}`));
     }
 
     async fetchPokemonById(id) {
       const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
+      const res = await fetch(url);
+      return res.ok 
+        ? await res.json()
+        : Promise.reject(new Error(`${res.status}`));
     }
 
     async searchForIdByName(name) {
       const allPokemon = await this.pokeNames;
       const findPokemonByName = pokemon => pokemon.name.toLowerCase() === name;
       const foundling = allPokemon.find(findPokemonByName);
-      return foundling.pokemon_species_id;
+      return foundling 
+        ? foundling.pokemon_species_id
+        : Promise.reject(new Error(`no foundling for ${name}`));
     }
 
-    onPokeKeyDown(e) {
-      this.pokeValue += e.detail.key
-      this.pokeInput.setAttribute('poke-value', this.pokeValue);
-    }
-
-    async onPokeSubmitDown(e) {
+    async catchPokemon(e) {
       const pokename = this.pokeValue;
       const id = await this.searchForIdByName(pokename);
       const data = await this.fetchPokemonById(id);
-      // todo: data processing
-      console.log('data', data);
-      console.log('sprite', data.sprites.front_default);
       const src = data.sprites.front_default;
-      console.log(src);
       this.pokeDisplay.setAttribute('poke-src', src);
+    }
+
+    catchError(err) {
+      console.log(err);
+    }
+
+    onPokeSubmitDown(e) {
+      this.catchPokemon(e).catch(this.catchError);
     }
 
     onPokeDeleteDown(e) {
@@ -87,11 +90,16 @@ import PokeKeyboard from "./PokeKeyboard.astro";
       this.pokeInput.setAttribute('poke-value', this.pokeValue);
     }
 
+    onPokeKeyDown(e) {
+      this.pokeValue += e.detail.key
+      this.pokeInput.setAttribute('poke-value', this.pokeValue);
+    }
+
     connectedCallback() {
-      this.addEventListener('pokekeydown', this.onPokeKeyDown);
       this.addEventListener('pokesubmitdown', this.onPokeSubmitDown);
       this.addEventListener('pokedeletedown', this.onPokeDeleteDown);
-      this.pokeNames = this.fetchPokeNames();
+      this.addEventListener('pokekeydown', this.onPokeKeyDown);
+      this.pokeNames = this.fetchPokemonNames();
     }
 
   }
