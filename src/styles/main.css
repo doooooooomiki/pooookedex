@@ -63,6 +63,7 @@ poke-keyboard {
   height: var(--keyboard-height);
   margin: 0 8px;
   user-select: none;
+  touch-action: manipulation;
 }
 
 poke-keyboard .row {
