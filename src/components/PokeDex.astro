@@ -69,23 +69,27 @@ import PokeKeyboard from "./PokeKeyboard.astro";
         : Promise.reject(new Error(`no foundling for ${name}`));
     }
 
-    async catchPokemon(e) {
+    async catchPokemon() {
       const pokename = this.pokeValue;
       const id = await this.searchForIdByName(pokename);
       const data = await this.fetchPokemonById(id);
-      const src = data.sprites.front_default;
-      this.pokeDisplay.setAttribute('poke-src', src);
+      return {
+        src: data.sprites.front_default,
+      };
     }
 
     catchError(err) {
       console.log(err);
     }
 
-    onPokeSubmitDown(e) {
-      this.catchPokemon(e).catch(this.catchError);
+    onPokeSubmitDown() {
+      this.catchPokemon()
+        .then((pokemon) => this.pokeDisplay.setAttribute('poke-src', pokemon.src))
+        .catch(this.catchError);
+      ;
     }
 
-    onPokeDeleteDown(e) {
+    onPokeDeleteDown() {
       this.pokeValue = this.pokeValue.slice(0, -1);
       this.pokeInput.setAttribute('poke-value', this.pokeValue);
     }
