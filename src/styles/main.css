@@ -1,12 +1,40 @@
 @import "./base/reset.css";
 
 :root {
-  --keyboard-height: 200px;
-  --key-bg: #565758;
-  --key-text-color: #ffffff;
-  --header-height: 40px;
-  --game-max-width: 500px;
-  --color-background: #121213;
+  --height-keyboard: 192px;
+  --height-header: 40px;
+  --height-input: 56px;
+  --height-button: 56px;
+
+  --max-width-game: 480px;
+
+  --color-red-100: #ec6d6c;
+  --color-red-200: #e05959;
+  --color-red-300: #d94a4a;
+  --color-red-400: #bc4343;
+
+  --color-blue-100: #7bd0de;
+  --color-blue-200: #23b1c9;
+  --color-blue-300: #309daf;
+  --color-blue-400: #348997;
+
+  --color-green-100: #92dbcb;
+  --color-green-200: #21b698;
+  --color-green-300: #2ba188;
+
+  --color-gray-100: #fafafa;
+  --color-gray-200: #e7e7e7;
+  --color-gray-300: #cfcfcf;
+  --color-gray-400: #858585;
+  --color-gray-500: #666666;
+  --color-gray-600: #5c5c5c;
+  --color-gray-700: #4d4d4d;
+
+  --color-yellow-100: #fbf5ab;
+  --color-yellow-200: #feee6a;
+  --color-yellow-300: #ddcd4c;
+
+  --border-radius: 4px;
 }
 
 html {
@@ -15,41 +43,67 @@ html {
 
 body {
   height: 100%;
-  background-color: var(--color-background);
+  background-color: var(--color-red-300);
   overflow-y: hidden;
 }
 
 header {
-  height: var(--header-height);
+  height: var(--height-header);
 }
 
 poke-dex {
   width: 100%;
-  max-width: var(--game-max-width);
+  max-width: var(--max-width-game);
+  max-height: 712px;
   margin: 0 auto;
-  height: calc(100% - var(--header-height));
+  height: calc(100% - var(--height-header));
   display: flex;
   flex-direction: column;
 }
 
 poke-display {
+  flex-grow: 1;
+  max-height: 384px;
+  overflow: hidden;
+  margin: 0 8px;
+  padding: 48px 48px 64px;
+  position: relative;
+  background-color: var(--color-gray-200);
+  border-radius: var(--border-radius);
+}
+
+poke-display::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border-style: solid;
+  border-width: 48px 0 0 48px;
+  border-color: transparent transparent transparent var(--color-red-300);
+}
+
+poke-display .screen {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
-  overflow: hidden;
+  background-color: var(--color-gray-700);
+  border-radius: var(--border-radius);
 }
 
 poke-input {
   display: block;
-  height: 58px;
-  margin: 0 8px 8px;
+  height: var(--height-input);
+  margin: auto 8px 8px 8px;
   user-select: none;
   font-family: inherit;
   font-weight: bold;
   font-size: 24px;
   text-transform: capitalize;
-  color: var(--key-text-color);
+  color: var(--color-gray-100);
 }
 
 poke-input {
@@ -60,7 +114,7 @@ poke-input {
 
 poke-keyboard {
   display: block;
-  height: var(--keyboard-height);
+  height: var(--height-keyboard);
   margin: 0 8px;
   user-select: none;
   touch-action: manipulation;
@@ -70,6 +124,7 @@ poke-keyboard .row {
   display: flex;
   width: 100%;
   margin: 0 auto 8px;
+  overflow: hidden;
 }
 
 poke-keyboard button {
@@ -78,14 +133,14 @@ poke-keyboard button {
   border: 0;
   padding: 0;
   margin: 0 6px 0 0;
-  height: 58px;
-  border-radius: 4px;
+  height: var(--height-button);
+  border-radius: var(--border-radius);
   cursor: pointer;
   user-select: none;
-  background-color: var(--key-bg);
-  color: var(--key-text-color);
+  color: var(--color-gray-100);
   text-transform: uppercase;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+  -webkit-tap-highlight-color: var(--color-blue-400);
+  position: relative;
 }
 
 poke-keyboard button {
@@ -95,8 +150,51 @@ poke-keyboard button {
   align-items: center;
 }
 
+poke-keyboard button[data-type="key"] {
+  background-color: var(--color-blue-200);
+}
+
+poke-keyboard button[data-type="submit"] {
+  background-color: var(--color-green-200);
+}
+
+poke-keyboard button[data-type="delete"] {
+  background-color: var(--color-gray-500);
+}
+
 poke-keyboard button:last-of-type {
   margin: 0;
+}
+
+poke-keyboard button::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  clip-path: ellipse(52% 12% at 48% 100%);
+  transform: clip-path 0.2s ease;
+}
+
+poke-keyboard button.is-down {
+  transform: translateY(2px);
+}
+
+poke-keyboard button.is-down::before {
+  clip-path: ellipse(52% 1% at 48% 100%);
+}
+
+poke-keyboard button[data-type="key"]::before {
+  background-color: var(--color-blue-300);
+}
+
+poke-keyboard button[data-type="submit"]::before {
+  background-color: var(--color-green-300);
+}
+
+poke-keyboard button[data-type="delete"]::before {
+  background-color: var(--color-gray-600);
 }
 
 poke-keyboard .small {
