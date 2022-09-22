@@ -86,7 +86,6 @@ import PokeKeyboard from "./PokeKeyboard.astro";
       this.catchPokemon()
         .then((pokemon) => this.pokeDisplay.setAttribute('poke-src', pokemon.src))
         .catch(this.catchError);
-      ;
     }
 
     onPokeDeleteDown() {
@@ -103,7 +102,9 @@ import PokeKeyboard from "./PokeKeyboard.astro";
       this.addEventListener('pokesubmitdown', this.onPokeSubmitDown);
       this.addEventListener('pokedeletedown', this.onPokeDeleteDown);
       this.addEventListener('pokekeydown', this.onPokeKeyDown);
-      this.pokeNames = this.fetchPokemonNames();
+      this.fetchPokemonNames()
+        .then(names => this.pokeNames = names)
+        .catch(this.catchError);
     }
 
   }
