@@ -162,7 +162,7 @@ poke-keyboard button[data-type="submit"] {
 
 poke-keyboard button[data-type="delete"] {
   background-color: var(--color-gray-500);
-  -webkit-tap-highlight-color: var(--color-blue-600);
+  -webkit-tap-highlight-color: var(--color-gray-600);
 }
 
 poke-keyboard button:last-of-type {
