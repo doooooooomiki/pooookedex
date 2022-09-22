@@ -139,7 +139,7 @@ poke-keyboard button {
   user-select: none;
   color: var(--color-gray-100);
   text-transform: uppercase;
-  -webkit-tap-highlight-color: var(--color-blue-400);
+
   position: relative;
 }
 
@@ -152,14 +152,17 @@ poke-keyboard button {
 
 poke-keyboard button[data-type="key"] {
   background-color: var(--color-blue-200);
+  -webkit-tap-highlight-color: var(--color-blue-300);
 }
 
 poke-keyboard button[data-type="submit"] {
   background-color: var(--color-green-200);
+  -webkit-tap-highlight-color: var(--color-green-300);
 }
 
 poke-keyboard button[data-type="delete"] {
   background-color: var(--color-gray-500);
+  -webkit-tap-highlight-color: var(--color-blue-600);
 }
 
 poke-keyboard button:last-of-type {
