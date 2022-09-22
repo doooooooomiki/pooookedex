@@ -60,13 +60,11 @@ import PokeKeyboard from "./PokeKeyboard.astro";
         : Promise.reject(new Error(`${res.status}`));
     }
 
-    async searchForIdByName(name) {
-      const allPokemon = await this.pokeNames;
-      const findPokemonByName = pokemon => pokemon.name.toLowerCase() === name;
-      const foundling = allPokemon.find(findPokemonByName);
+    async searchForIdByName(pokename) {
+      const foundling = (await this.pokeNames).find(pokemon => pokemon.name.toLowerCase() === pokename);
       return foundling 
         ? foundling.pokemon_species_id
-        : Promise.reject(new Error(`no foundling for ${name}`));
+        : Promise.reject(new Error(`no foundling for ${pokename}`));
     }
 
     async catchPokemon(pokename) {
