@@ -69,8 +69,7 @@ import PokeKeyboard from "./PokeKeyboard.astro";
         : Promise.reject(new Error(`no foundling for ${name}`));
     }
 
-    async catchPokemon() {
-      const pokename = this.pokeValue;
+    async catchPokemon(pokename) {
       const id = await this.searchForIdByName(pokename);
       const data = await this.fetchPokemonById(id);
       return {
@@ -83,7 +82,7 @@ import PokeKeyboard from "./PokeKeyboard.astro";
     }
 
     onPokeSubmitDown() {
-      this.catchPokemon()
+      this.catchPokemon(this.pokeValue)
         .then((pokemon) => this.pokeDisplay.setAttribute('poke-src', pokemon.src))
         .catch(this.catchError);
     }
