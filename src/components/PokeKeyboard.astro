@@ -39,7 +39,6 @@ import Button from "./Button.astro";
     <Button key="m" type="key" />
     <Button key="backspace" type="backspace" class="big" />
   </div>
-
 </poke-keyboard>
 
 <script>
@@ -90,21 +89,17 @@ import Button from "./Button.astro";
       }));
     }
 
-    onKeyDown(e) {
+    onKeyDownOrUp(e) {
       if (!this.allowedKeys.includes(e.key)) return;
       const currentTarget = this.querySelector(`button[data-key="${e.key.toLowerCase()}"]`);
-      this.onPointerDown({currentTarget});
-    }
-
-    onKeyUp(e) {
-      if (!this.allowedKeys.includes(e.key)) return;
-      const currentTarget = this.querySelector(`button[data-key="${e.key.toLowerCase()}"]`);
-      this.onPointerUp({currentTarget});
+      e.type === 'keydown'
+        ? this.onPointerDown({currentTarget})
+        : this.onPointerUp({currentTarget});
     }
 
     connectedCallback() {
-      document.body.addEventListener('keydown', this.onKeyDown.bind(this));
-      document.body.addEventListener('keyup', this.onKeyUp.bind(this));
+      document.body.addEventListener('keydown', this.onKeyDownOrUp.bind(this));
+      document.body.addEventListener('keyup', this.onKeyDownOrUp.bind(this));
       this.buttons.forEach((button) => {
         button.addEventListener('pointerdown', this.onPointerDown.bind(this));
         button.addEventListener('pointerup', this.onPointerUp.bind(this));
@@ -113,8 +108,8 @@ import Button from "./Button.astro";
     }
 
     disconnectedCallback() {
-      document.body.addEventListener('keydown', this.onKeyDown.bind(this));
-      document.body.addEventListener('keyup', this.onKeyUp.bind(this));
+      document.body.addEventListener('keydown', this.onKeyDownOrUp.bind(this));
+      document.body.addEventListener('keyup', this.onKeyDownOrUp.bind(this));
     }
   }
   customElements.define("poke-keyboard", PokeKeyboard);
