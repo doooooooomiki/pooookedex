@@ -1,6 +1,6 @@
 @font-face {
   font-family: "pokefont";
-  src: url("pokefont.ttf") format("truetype");
+  src: url("/pokefont.ttf") format("truetype");
 }
 
 :root {
