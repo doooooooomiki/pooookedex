@@ -1,45 +1,44 @@
 ---
+import Button from "./Button.astro";
 
 ---
 
 <poke-keyboard>
   <div class="row">
-    <button data-type="key" data-key="q">q</button>
-    <button data-type="key" data-key="w">w</button>
-    <button data-type="key" data-key="e">e</button>
-    <button data-type="key" data-key="r">r</button>
-    <button data-type="key" data-key="t">t</button>
-    <button data-type="key" data-key="z">z</button>
-    <button data-type="key" data-key="u">u</button>
-    <button data-type="key" data-key="i">i</button>
-    <button data-type="key" data-key="o">o</button>
-    <button data-type="key" data-key="p">p</button>
+    <Button key="q" type="key" />
+    <Button key="w" type="key" />
+    <Button key="e" type="key" />
+    <Button key="r" type="key" />
+    <Button key="t" type="key" />
+    <Button key="z" type="key" />
+    <Button key="u" type="key" />
+    <Button key="i" type="key" />
+    <Button key="o" type="key" />
+    <Button key="p" type="key" />
   </div>
   <div class="row">
     <div class="spacer small"></div>
-    <button data-type="key" data-key="a">a</button>
-    <button data-type="key" data-key="s">s</button>
-    <button data-type="key" data-key="d">d</button>
-    <button data-type="key" data-key="f">f</button>
-    <button data-type="key" data-key="g">g</button>
-    <button data-type="key" data-key="h">h</button>
-    <button data-type="key" data-key="j">j</button>
-    <button data-type="key" data-key="k">k</button>
-    <button data-type="key" data-key="l">l</button>
+    <Button key="a" type="key" />
+    <Button key="s" type="key" />
+    <Button key="d" type="key" />
+    <Button key="f" type="key" />
+    <Button key="g" type="key" />
+    <Button key="h" type="key" />
+    <Button key="j" type="key" />
+    <Button key="k" type="key" />
+    <Button key="l" type="key" />
     <div class="spacer small"></div>
   </div>
   <div class="row">
-    <button data-type="submit" data-key="↵" class="big">enter</button>
-    <button data-type="key" data-key="y">y</button>
-    <button data-type="key" data-key="x">x</button>
-    <button data-type="key" data-key="c">c</button>
-    <button data-type="key" data-key="v">v</button>
-    <button data-type="key" data-key="b">b</button>
-    <button data-type="key" data-key="n">n</button>
-    <button data-type="key" data-key="m">m</button>
-    <button data-type="delete" data-key="←" class="big">
-      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="game-icon" data-testid="icon-backspace"><path fill="var(--color-gray-100)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path></svg>
-    </button>
+    <Button key="↵" type="submit" class="big" />
+    <Button key="y" type="key" />
+    <Button key="x" type="key" />
+    <Button key="c" type="key" />
+    <Button key="v" type="key" />
+    <Button key="b" type="key" />
+    <Button key="n" type="key" />
+    <Button key="m" type="key" />
+    <Button key="←" type="delete" class="big" />
   </div>
 
 </poke-keyboard>

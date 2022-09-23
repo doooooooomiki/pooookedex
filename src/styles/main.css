@@ -1,5 +1,10 @@
 @import "./base/reset.css";
 
+@font-face {
+  font-family: "pokefont";
+  src: url("pokefont.ttf") format("truetype");
+}
+
 :root {
   --height-keyboard: 192px;
   --height-header: 40px;
@@ -45,6 +50,7 @@ body {
   height: 100%;
   background-color: var(--color-red-300);
   overflow-y: hidden;
+  font-family: pokefont;
 }
 
 header {
@@ -99,7 +105,6 @@ poke-input {
   height: var(--height-input);
   margin: auto 8px 8px 8px;
   user-select: none;
-  font-family: inherit;
   font-weight: bold;
   font-size: 24px;
   text-transform: capitalize;
@@ -138,6 +143,7 @@ poke-keyboard button {
   cursor: pointer;
   user-select: none;
   color: var(--color-gray-100);
+  background-color: transparent;
   text-transform: uppercase;
 
   position: relative;
@@ -150,54 +156,45 @@ poke-keyboard button {
   align-items: center;
 }
 
+poke-keyboard button {
+  background-color: var(--color-button-base);
+  box-shadow: inset -6px -6px 0px 0px var(--color-button-dark);
+}
+
 poke-keyboard button[data-type="key"] {
-  background-color: var(--color-blue-200);
-  -webkit-tap-highlight-color: var(--color-blue-300);
+  --color-button-lite: var(--color-blue-100);
+  --color-button-base: var(--color-blue-200);
+  --color-button-dark: var(--color-blue-300);
 }
 
 poke-keyboard button[data-type="submit"] {
-  background-color: var(--color-green-200);
-  -webkit-tap-highlight-color: var(--color-green-300);
+  --color-button-lite: var(--color-green-100);
+  --color-button-base: var(--color-green-200);
+  --color-button-dark: var(--color-green-300);
 }
 
 poke-keyboard button[data-type="delete"] {
-  background-color: var(--color-gray-500);
-  -webkit-tap-highlight-color: var(--color-gray-600);
+  --color-button-lite: var(--color-gray-400);
+  --color-button-base: var(--color-gray-500);
+  --color-button-dark: var(--color-gray-600);
+}
+
+poke-keyboard button {
+  transition: all 0.1s ease;
+}
+
+poke-keyboard button.is-down {
+  transform: translate(1px, 1px);
+  box-shadow: inset 2px 2px 0px 0px var(--color-button-dark),
+    inset -2px -2px 0px 0px var(--color-button-dark);
 }
 
 poke-keyboard button:last-of-type {
   margin: 0;
 }
 
-poke-keyboard button::before {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 100%;
+poke-keyboard button > svg {
   position: absolute;
-  inset: 0;
-  clip-path: ellipse(52% 12% at 48% 100%);
-  transform: clip-path 0.2s ease;
-}
-
-poke-keyboard button.is-down {
-  transform: translateY(2px);
-}
-
-poke-keyboard button.is-down::before {
-  clip-path: ellipse(52% 1% at 48% 100%);
-}
-
-poke-keyboard button[data-type="key"]::before {
-  background-color: var(--color-blue-300);
-}
-
-poke-keyboard button[data-type="submit"]::before {
-  background-color: var(--color-green-300);
-}
-
-poke-keyboard button[data-type="delete"]::before {
-  background-color: var(--color-gray-600);
 }
 
 poke-keyboard .small {
@@ -206,5 +203,5 @@ poke-keyboard .small {
 
 poke-keyboard .big {
   flex: 1.5;
-  font-size: 12px;
+  font-size: 8px;
 }
