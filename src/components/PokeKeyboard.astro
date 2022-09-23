@@ -47,10 +47,18 @@ import Button from "./Button.astro";
   class PokeKeyboard extends HTMLElement {
     constructor() {
       super();
+      this._typingSounds = [
+        new Audio('/typing-sound-1.mp3'),
+        new Audio('/typing-sound-2.mp3'),
+      ];
     }
 
     get buttons() {
       return this.querySelectorAll('button');
+    }
+
+    get typingSounds() {
+      return this._typingSounds;
     }
 
     onPointerLeave(e) {
@@ -63,6 +71,9 @@ import Button from "./Button.astro";
 
     onPointerDown(e) {
       if ('vibrate' in navigator) navigator.vibrate(42);
+      const sound = this._typingSounds[Math.floor(Math.random() * this._typingSounds.length)];
+      sound.play();
+      console.log(sound);
 
       e.currentTarget.classList.toggle('is-down');
       const type = e.currentTarget.dataset.type;
