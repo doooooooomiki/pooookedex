@@ -1,0 +1,9 @@
+poke-dex {
+  width: 100%;
+  max-width: var(--max-width-game);
+  max-height: 712px;
+  margin: 0 auto;
+  height: calc(100% - var(--height-header));
+  display: flex;
+  flex-direction: column;
+}

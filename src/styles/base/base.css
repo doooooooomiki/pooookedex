@@ -1,0 +1,56 @@
+@font-face {
+  font-family: "pokefont";
+  src: url("pokefont.ttf") format("truetype");
+}
+
+:root {
+  --height-keyboard: 192px;
+  --height-header: 40px;
+  --height-input: 56px;
+  --height-button: 56px;
+
+  --max-width-game: 480px;
+
+  --color-red-100: #ec6d6c;
+  --color-red-200: #e05959;
+  --color-red-300: #d94a4a;
+  --color-red-400: #bc4343;
+
+  --color-blue-100: #7bd0de;
+  --color-blue-200: #23b1c9;
+  --color-blue-300: #309daf;
+  --color-blue-400: #348997;
+
+  --color-green-100: #92dbcb;
+  --color-green-200: #21b698;
+  --color-green-300: #2ba188;
+
+  --color-gray-100: #fafafa;
+  --color-gray-200: #e7e7e7;
+  --color-gray-300: #cfcfcf;
+  --color-gray-400: #858585;
+  --color-gray-500: #666666;
+  --color-gray-600: #5c5c5c;
+  --color-gray-700: #4d4d4d;
+
+  --color-yellow-100: #fbf5ab;
+  --color-yellow-200: #feee6a;
+  --color-yellow-300: #ddcd4c;
+
+  --border-radius: 4px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-color: var(--color-red-300);
+  overflow-y: hidden;
+  font-family: pokefont;
+}
+
+header {
+  height: var(--height-header);
+}
