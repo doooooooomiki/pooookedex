@@ -48,13 +48,13 @@ poke-keyboard button[data-type="key"] {
   --color-button-dark: var(--color-blue-300);
 }
 
-poke-keyboard button[data-type="submit"] {
+poke-keyboard button[data-type="enter"] {
   --color-button-lite: var(--color-green-100);
   --color-button-base: var(--color-green-200);
   --color-button-dark: var(--color-green-300);
 }
 
-poke-keyboard button[data-type="delete"] {
+poke-keyboard button[data-type="backspace"] {
   --color-button-lite: var(--color-gray-400);
   --color-button-base: var(--color-gray-500);
   --color-button-dark: var(--color-gray-600);

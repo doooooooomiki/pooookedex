@@ -15,16 +15,6 @@ import PokeKeyboard from "./PokeKeyboard.astro";
       super();
       this._pokeNames = null;
       this._pokeValue = '';
-      this._allowedKeys = [
-        'q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p',
-        'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
-        'y', 'x', 'c', 'v', 'b', 'n', 'm',
-        'Enter', 'Backspace',
-      ];
-    }
-
-    get allowedKeys() {
-      return this._allowedKeys;
     }
 
     set pokeNames(val) {
@@ -87,13 +77,6 @@ import PokeKeyboard from "./PokeKeyboard.astro";
       if ('vibrate' in navigator) navigator.vibrate(666);
     }
 
-    onKeyDown(e) {
-      if (!this.allowedKeys.includes(e.key)) return;
-      if (e.key === 'Enter') this.onPokeSubmitDown();
-      if (e.key === 'Backspace') this.onPokeDeleteDown();
-      if (e.key !== 'Enter' && e.key !== 'Backspace') this.onPokeKeyDown({detail: {key: e.key}});
-    }
-
     onPokeSubmitDown() {
       this.catchPokemon(this.pokeValue)
         .then((pokemon) => this.pokeDisplay.setAttribute('poke-src', pokemon.src))
@@ -115,17 +98,12 @@ import PokeKeyboard from "./PokeKeyboard.astro";
     }
 
     connectedCallback() {
-      document.body.addEventListener('keydown', this.onKeyDown.bind(this));
-      this.addEventListener('pokesubmitdown', this.onPokeSubmitDown);
-      this.addEventListener('pokedeletedown', this.onPokeDeleteDown);
+      this.addEventListener('pokeenterdown', this.onPokeSubmitDown);
+      this.addEventListener('pokebackspacedown', this.onPokeDeleteDown);
       this.addEventListener('pokekeydown', this.onPokeKeyDown);
       this.fetchPokemonNames()
         .then(names => this.pokeNames = names)
         .catch(this.catchError);
-    }
-
-    disconnectedCallback() {
-      document.body.addEventListener('keydown', this.onKeyDown.bind(this));
     }
 
   }

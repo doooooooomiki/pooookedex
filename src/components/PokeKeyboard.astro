@@ -1,6 +1,5 @@
 ---
 import Button from "./Button.astro";
-
 ---
 
 <poke-keyboard>
@@ -30,7 +29,7 @@ import Button from "./Button.astro";
     <div class="spacer small"></div>
   </div>
   <div class="row">
-    <Button key="↵" type="submit" class="big" />
+    <Button key="enter" type="enter" class="big" />
     <Button key="y" type="key" />
     <Button key="x" type="key" />
     <Button key="c" type="key" />
@@ -38,7 +37,7 @@ import Button from "./Button.astro";
     <Button key="b" type="key" />
     <Button key="n" type="key" />
     <Button key="m" type="key" />
-    <Button key="←" type="delete" class="big" />
+    <Button key="backspace" type="backspace" class="big" />
   </div>
 
 </poke-keyboard>
@@ -51,6 +50,16 @@ import Button from "./Button.astro";
         new Audio('/typing-sound-1.mp3'),
         new Audio('/typing-sound-2.mp3'),
       ];
+      this._allowedKeys = [
+        'q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p',
+        'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+        'y', 'x', 'c', 'v', 'b', 'n', 'm',
+        'Enter', 'Backspace',
+      ];
+    }
+
+    get allowedKeys() {
+      return this._allowedKeys;
     }
 
     get buttons() {
@@ -72,7 +81,6 @@ import Button from "./Button.astro";
     onPointerDown(e) {
       if ('vibrate' in navigator) navigator.vibrate(42);
       this._typingSounds[Math.floor(Math.random() * this._typingSounds.length)].play();
-
       e.currentTarget.classList.toggle('is-down');
       const type = e.currentTarget.dataset.type;
       const key = e.currentTarget.dataset.key;
@@ -82,12 +90,31 @@ import Button from "./Button.astro";
       }));
     }
 
+    onKeyDown(e) {
+      if (!this.allowedKeys.includes(e.key)) return;
+      const currentTarget = this.querySelector(`button[data-key="${e.key.toLowerCase()}"]`);
+      this.onPointerDown({currentTarget});
+    }
+
+    onKeyUp(e) {
+      if (!this.allowedKeys.includes(e.key)) return;
+      const currentTarget = this.querySelector(`button[data-key="${e.key.toLowerCase()}"]`);
+      this.onPointerUp({currentTarget});
+    }
+
     connectedCallback() {
+      document.body.addEventListener('keydown', this.onKeyDown.bind(this));
+      document.body.addEventListener('keyup', this.onKeyUp.bind(this));
       this.buttons.forEach((button) => {
         button.addEventListener('pointerdown', this.onPointerDown.bind(this));
         button.addEventListener('pointerup', this.onPointerUp.bind(this));
         button.addEventListener('pointerleave', this.onPointerLeave.bind(this));
       });
+    }
+
+    disconnectedCallback() {
+      document.body.addEventListener('keydown', this.onKeyDown.bind(this));
+      document.body.addEventListener('keyup', this.onKeyUp.bind(this));
     }
   }
   customElements.define("poke-keyboard", PokeKeyboard);
