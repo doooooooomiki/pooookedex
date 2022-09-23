@@ -1,7 +1,7 @@
 poke-keyboard {
   display: block;
   height: var(--height-keyboard);
-  margin: 0 8px;
+  margin: auto 8px 0;
   user-select: none;
   touch-action: manipulation;
 }

@@ -1,16 +1,14 @@
 poke-input {
   display: block;
-  height: var(--height-input);
-  margin: auto 8px 8px 8px;
+  margin-top: auto;
   user-select: none;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
   text-transform: capitalize;
-  color: var(--color-gray-100);
+  color: var(--color-green-200);
 }
 
 poke-input {
   display: flex;
-  justify-content: center;
   align-items: center;
 }

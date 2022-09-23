@@ -4,7 +4,10 @@
 
 <poke-display poke-src="">
     <div class="screen">
-      <img src="" alt="">
+      <div class="output">
+        <img src="" alt="">
+      </div>
+      <poke-input poke-value=""></poke-input>
     </div>
 </poke-display>
 
@@ -27,4 +30,20 @@
     }
   }
   customElements.define("poke-display", PokeDisplay);
+
+  class PokeInput extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    static get observedAttributes() { 
+      return ['poke-value'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.innerText = newValue;
+    }
+
+  }
+  customElements.define("poke-input", PokeInput);
 </script>

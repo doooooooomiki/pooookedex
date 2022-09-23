@@ -71,9 +71,7 @@ import Button from "./Button.astro";
 
     onPointerDown(e) {
       if ('vibrate' in navigator) navigator.vibrate(42);
-      const sound = this._typingSounds[Math.floor(Math.random() * this._typingSounds.length)];
-      sound.play();
-      console.log(sound);
+      this._typingSounds[Math.floor(Math.random() * this._typingSounds.length)].play();
 
       e.currentTarget.classList.toggle('is-down');
       const type = e.currentTarget.dataset.type;
