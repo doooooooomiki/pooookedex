@@ -1,18 +1,15 @@
 ---
 import PokeDisplay from "./PokeDisplay.astro";
-import PokeInput from "./PokeInput.astro";
 import PokeKeyboard from "./PokeKeyboard.astro";
 ---
 
 <poke-dex>
   <PokeDisplay />
-  <PokeInput />
   <PokeKeyboard />
 </poke-dex>
 
 <script>
   
-
   class PokeDex extends HTMLElement {
     constructor() {
       super();
@@ -80,6 +77,8 @@ import PokeKeyboard from "./PokeKeyboard.astro";
       if ('vibrate' in navigator) navigator.vibrate(666);
     }
 
+
+
     onPokeSubmitDown() {
       this.catchPokemon(this.pokeValue)
         .then((pokemon) => this.pokeDisplay.setAttribute('poke-src', pokemon.src))
@@ -92,6 +91,10 @@ import PokeKeyboard from "./PokeKeyboard.astro";
     }
 
     onPokeKeyDown(e) {
+      if(this.pokeValue.length >= 11) {
+        if ('vibrate' in navigator) navigator.vibrate(666);
+        return;
+      }
       this.pokeValue += e.detail.key
       this.pokeInput.setAttribute('poke-value', this.pokeValue);
     }
