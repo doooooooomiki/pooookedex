@@ -73,33 +73,49 @@ import PokeKeyboard from "./PokeKeyboard.astro";
     }
 
     catchError(err) {
-      console.log(err);
       if ('vibrate' in navigator) navigator.vibrate(666);
     }
 
-    onPokeSubmitDown() {
-      this.catchPokemon(this.pokeValue)
-        .then((pokemon) => this.pokeDisplay.setAttribute('poke-src', pokemon.src))
-        .catch(this.catchError);
+    pokeDisplayUpdateOnSuccess(pokemon) {
+      this.pokeDisplay.setAttribute('poke-src', pokemon.src);
+      this.pokeDisplay.setAttribute('poke-signal', 'success');
+      this.pokeValue = '';
+      this.pokeInput.setAttribute('poke-value', this.pokeValue);
     }
 
-    onPokeDeleteDown() {
+    pokeDisplayUpdateOnError() {
+      if ('vibrate' in navigator) navigator.vibrate(666);
+      console.log(this);
+      this.pokeDisplay.setAttribute('poke-signal', 'error');
+    }
+
+    onPokeEnterDown() {
+      this.catchPokemon(this.pokeValue)
+        .then((pokemon) => this.pokeDisplayUpdateOnSuccess(pokemon))
+        .catch(this.pokeDisplayUpdateOnError.bind(this));
+    }
+
+    onPokeBackSpaceDown() {
       this.pokeValue = this.pokeValue.slice(0, -1);
       this.pokeInput.setAttribute('poke-value', this.pokeValue);
     }
 
     onPokeKeyDown(e) {
-      if(this.pokeValue.length >= 11) {
+      if (this.pokeValue.length >= 11) {
         if ('vibrate' in navigator) navigator.vibrate(666);
+        this.pokeDisplay.setAttribute('poke-signal', 'error');
+
         return;
       }
+      this.pokeDisplay.setAttribute('poke-signal', 'pending');
+
       this.pokeValue += e.detail.key
       this.pokeInput.setAttribute('poke-value', this.pokeValue);
     }
 
     connectedCallback() {
-      this.addEventListener('pokeenterdown', this.onPokeSubmitDown);
-      this.addEventListener('pokebackspacedown', this.onPokeDeleteDown);
+      this.addEventListener('pokeenterdown', this.onPokeEnterDown);
+      this.addEventListener('pokebackspacedown', this.onPokeBackSpaceDown);
       this.addEventListener('pokekeydown', this.onPokeKeyDown);
       this.fetchPokemonNames()
         .then(names => this.pokeNames = names)
