@@ -45,9 +45,9 @@ import Button from "./Button.astro";
   class PokeKeyboard extends HTMLElement {
     constructor() {
       super();
-      this._typingSoundSources = [
-        '/typing-sound-1.mp3',
-        '/typing-sound-2.mp3',
+      this._typingAudioElement = [
+        new Audio('/typing-sound-1.mp3'),
+        new Audio('/typing-sound-2.mp3'),
       ];
       this._allowedKeys = [
         'q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p',
@@ -65,8 +65,8 @@ import Button from "./Button.astro";
       return this.querySelectorAll('button');
     }
 
-    get typingSoundSources() {
-      return this._typingSoundSources;
+    get typingAudioElement() {
+      return this._typingAudioElement;
     }
 
     deletegateKeyEventToPointerHandler(e) {
@@ -77,8 +77,9 @@ import Button from "./Button.astro";
     }
 
     typingAudioPlay() {
-      const soundSrc = this.typingSoundSources[Math.floor(Math.random() * this.typingSoundSources.length)];
-      new Audio(soundSrc).play();
+      const typingAudio = this.typingAudioElement[Math.floor(Math.random() * this.typingAudioElement.length)];
+      typingAudio.load();
+      typingAudio.play();
     }
 
     dispatchCustomPokeEvent(e) {

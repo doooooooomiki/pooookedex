@@ -85,7 +85,6 @@ import PokeKeyboard from "./PokeKeyboard.astro";
 
     pokeDisplayUpdateOnError() {
       if ('vibrate' in navigator) navigator.vibrate(666);
-      console.log(this);
       this.pokeDisplay.setAttribute('poke-signal', 'error');
     }
 
