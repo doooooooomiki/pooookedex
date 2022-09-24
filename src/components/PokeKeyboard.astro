@@ -49,12 +49,29 @@ import Button from "./Button.astro";
         new Audio('/typing-sound-1.mp3'),
         new Audio('/typing-sound-2.mp3'),
       ];
+
+      this._pokeCache = null;
+
+      this._typingAudioSources = [
+        '/typing-sound-1.mp3',
+        '/typing-sound-2.mp3',
+      ];
+
       this._allowedKeys = [
         'q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p',
         'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
         'y', 'x', 'c', 'v', 'b', 'n', 'm',
         'Enter', 'Backspace',
       ];
+
+    }
+
+    get pokeCache() {
+      return this._pokeCache;
+    }
+
+    set pokeCache(val) {
+      this._pokeCache = val;
     }
 
     get allowedKeys() {
@@ -69,6 +86,10 @@ import Button from "./Button.astro";
       return this._typingAudioElement;
     }
 
+    get typingAudioSources() {
+      return this._typingAudioSources;
+    }
+
     deletegateKeyEventToPointerHandler(e) {
       const currentTarget = this.querySelector(`button[data-key="${e.key.toLowerCase()}"]`);
       e.type === 'keydown'
@@ -76,10 +97,18 @@ import Button from "./Button.astro";
         : this.onPointerUp({currentTarget});
     }
 
-    typingAudioPlay() {
-      const typingAudio = this.typingAudioElement[Math.floor(Math.random() * this.typingAudioElement.length)];
-      typingAudio.load();
-      typingAudio.play();
+    async typingAudioPlay() {
+      //const typingAudio = this.typingAudioElement[Math.floor(Math.random() * this.typingAudioElement.length)];
+      //typingAudio.load();
+      //typingAudio.play();
+      const audioSrc = this.typingAudioSources[Math.floor(Math.random() * this.typingAudioSources.length)];
+      const response = await this.pokeCache.match(audioSrc);
+      const reader = await response.body.getReader();
+      const {value: chunk } = await reader.read();
+      const mimeType = 'audio/mpeg'
+      const url = URL.createObjectURL(new Blob([chunk.buffer], {type: mimeType}))
+      const audio = new Audio(url);
+      audio.play();
     }
 
     dispatchCustomPokeEvent(e) {
@@ -101,6 +130,7 @@ import Button from "./Button.astro";
 
     onPointerLeave(e) {
       this.classIsDownRemove(e)
+
     }
 
     onPointerUp(e) {
@@ -119,7 +149,13 @@ import Button from "./Button.astro";
       this.deletegateKeyEventToPointerHandler(e);
     }
 
+    async openNewCache() {
+      this.pokeCache = await caches.open('poke-cache');
+      this.pokeCache.addAll(this.typingAudioSources);
+    }
+
     connectedCallback() {
+      if ('caches' in window) this.openNewCache();
       document.body.addEventListener('keydown', this.onKeyDownOrUp.bind(this));
       document.body.addEventListener('keyup', this.onKeyDownOrUp.bind(this));
       this.buttons.forEach((button) => {
