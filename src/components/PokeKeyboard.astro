@@ -65,7 +65,7 @@ import Button from "./Button.astro";
       return this.querySelectorAll('button');
     }
 
-    get typingSoundSouces() {
+    get typingSoundSources() {
       return this._typingSoundSources;
     }
 
@@ -77,7 +77,7 @@ import Button from "./Button.astro";
     }
 
     typingAudioPlay() {
-      const soundSrc = this.typingSoundSouces[Math.floor(Math.random() * this.typingSoundSouces.length)];
+      const soundSrc = this.typingSoundSources[Math.floor(Math.random() * this.typingSoundSources.length)];
       new Audio(soundSrc).play();
     }
 
