@@ -107,8 +107,7 @@ import Button from "./Button.astro";
       const {value: chunk } = await reader.read();
       const mimeType = 'audio/mpeg'
       const url = URL.createObjectURL(new Blob([chunk.buffer], {type: mimeType}))
-      const audio = new Audio(url);
-      audio.play();
+      return new Audio(url);
     }
 
     dispatchCustomPokeEvent(e) {
@@ -139,7 +138,8 @@ import Button from "./Button.astro";
 
     onPointerDown(e) {
       if ('vibrate' in navigator) navigator.vibrate(42);
-      this.typingAudioPlay();
+      this.typingAudioPlay()
+        .then((audio) => audio.play());
       this.classIsDownToggle(e);
       this.dispatchCustomPokeEvent(e);
     }
