@@ -45,9 +45,9 @@ import Button from "./Button.astro";
   class PokeKeyboard extends HTMLElement {
     constructor() {
       super();
-      this._typingSounds = [
-        new Audio('/typing-sound-1.mp3'),
-        new Audio('/typing-sound-2.mp3'),
+      this._typingSoundSources = [
+        '/typing-sound-1.mp3',
+        '/typing-sound-2.mp3',
       ];
       this._allowedKeys = [
         'q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p',
@@ -65,22 +65,23 @@ import Button from "./Button.astro";
       return this.querySelectorAll('button');
     }
 
-    get typingSounds() {
-      return this._typingSounds;
+    get typingSoundSouces() {
+      return this._typingSoundSources;
     }
 
-    onPointerLeave(e) {
-      e.currentTarget.classList.remove('is-down');
+    deletegateKeyEventToPointerHandler(e) {
+      const currentTarget = this.querySelector(`button[data-key="${e.key.toLowerCase()}"]`);
+      e.type === 'keydown'
+        ? this.onPointerDown({currentTarget})
+        : this.onPointerUp({currentTarget});
     }
 
-    onPointerUp(e) {
-      e.currentTarget.classList.toggle('is-down');
+    typingAudioPlay() {
+      const soundSrc = this.typingSoundSouces[Math.floor(Math.random() * this.typingSoundSouces.length)];
+      new Audio(soundSrc).play();
     }
 
-    onPointerDown(e) {
-      if ('vibrate' in navigator) navigator.vibrate(42);
-      this._typingSounds[Math.floor(Math.random() * this._typingSounds.length)].play();
-      e.currentTarget.classList.toggle('is-down');
+    dispatchCustomPokeEvent(e) {
       const type = e.currentTarget.dataset.type;
       const key = e.currentTarget.dataset.key;
       this.dispatchEvent(new CustomEvent(`poke${type}down`, {
@@ -89,12 +90,32 @@ import Button from "./Button.astro";
       }));
     }
 
+    classIsDownToggle(e) {
+      e.currentTarget.classList.toggle('is-down');
+    }
+
+    classIsDownRemove(e) {
+      e.currentTarget.classList.remove('is-down');
+    }
+
+    onPointerLeave(e) {
+      this.classIsDownRemove(e)
+    }
+
+    onPointerUp(e) {
+      this.classIsDownToggle(e);
+    }
+
+    onPointerDown(e) {
+      if ('vibrate' in navigator) navigator.vibrate(42);
+      this.typingAudioPlay();
+      this.classIsDownToggle(e);
+      this.dispatchCustomPokeEvent(e);
+    }
+
     onKeyDownOrUp(e) {
       if (!this.allowedKeys.includes(e.key)) return;
-      const currentTarget = this.querySelector(`button[data-key="${e.key.toLowerCase()}"]`);
-      e.type === 'keydown'
-        ? this.onPointerDown({currentTarget})
-        : this.onPointerUp({currentTarget});
+      this.deletegateKeyEventToPointerHandler(e);
     }
 
     connectedCallback() {
