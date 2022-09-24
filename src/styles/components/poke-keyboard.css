@@ -74,6 +74,10 @@ poke-keyboard button:last-of-type {
   margin: 0;
 }
 
+poke-keyboard button:focus-visible {
+  outline: none;
+}
+
 poke-keyboard button > svg {
   position: absolute;
 }
