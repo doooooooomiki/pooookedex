@@ -23,7 +23,7 @@ poke-keyboard button {
   border-radius: var(--border-radius);
   cursor: pointer;
   user-select: none;
-  color: var(--color-gray-100);
+  color: var(--color-100-gray);
   background-color: transparent;
   text-transform: uppercase;
 
@@ -43,21 +43,21 @@ poke-keyboard button {
 }
 
 poke-keyboard button[data-type="key"] {
-  --color-button-lite: var(--color-blue-100);
-  --color-button-base: var(--color-blue-200);
-  --color-button-dark: var(--color-blue-300);
+  --color-button-lite: var(--color-100-blue);
+  --color-button-base: var(--color-200-blue);
+  --color-button-dark: var(--color-300-blue);
 }
 
 poke-keyboard button[data-type="enter"] {
-  --color-button-lite: var(--color-green-100);
-  --color-button-base: var(--color-green-200);
-  --color-button-dark: var(--color-green-300);
+  --color-button-lite: var(--color-100-green);
+  --color-button-base: var(--color-200-green);
+  --color-button-dark: var(--color-300-green);
 }
 
 poke-keyboard button[data-type="backspace"] {
-  --color-button-lite: var(--color-gray-400);
-  --color-button-base: var(--color-gray-500);
-  --color-button-dark: var(--color-gray-600);
+  --color-button-lite: var(--color-400-gray);
+  --color-button-base: var(--color-500-gray);
+  --color-button-dark: var(--color-600-gray);
 }
 
 poke-keyboard button {

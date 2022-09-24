@@ -1,32 +1,54 @@
 poke-display {
-  flex-grow: 1;
-  max-height: 384px;
-  overflow: hidden;
-  margin: 0 8px;
-  padding: 48px 48px 64px;
-  position: relative;
-  background-color: var(--color-gray-200);
-  border-radius: var(--border-radius);
+  --color-display-lite: var(--color-100-gray);
+  --color-display-base: var(--color-200-gray);
+  --color-display-dark: var(--color-300-gray);
 }
 
-poke-display::before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-  left: 0;
+poke-display[poke-signal="pending"] {
+  --color-signal-lite: var(--color-100-yellow);
+  --color-signal-base: var(--color-200-yellow);
+  --color-signal-dark: var(--color-300-yellow);
+  --color-signal-deep: var(--color-400-yellow);
+}
+
+poke-display[poke-signal="success"] {
+  --color-signal-lite: var(--color-100-green);
+  --color-signal-base: var(--color-200-green);
+  --color-signal-dark: var(--color-300-green);
+  --color-signal-deep: var(--color-400-green);
+}
+
+poke-display[poke-signal="error"] {
+  --color-signal-lite: var(--color-100-red);
+  --color-signal-base: var(--color-200-red);
+  --color-signal-dark: var(--color-300-red);
+  --color-signal-deep: var(--color-400-red);
+}
+
+poke-display .signal {
+  left: 32px;
   bottom: 0;
-  border-style: solid;
-  border-width: 48px 0 0 48px;
-  border-color: transparent transparent transparent var(--color-red-300);
+}
+
+poke-display {
+  height: 384px;
+  overflow: hidden;
+  margin: 0 8px 8px;
+  padding: 56px 56px 96px;
+  position: relative;
 }
 
 poke-display .screen {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-gray-700);
+  background-color: var(--color-display-lite);
   border-radius: var(--border-radius);
   padding: 8px;
+}
+
+poke-display > svg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
 }

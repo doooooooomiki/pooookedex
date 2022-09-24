@@ -5,7 +5,7 @@ poke-input {
   font-weight: bold;
   font-size: 16px;
   text-transform: capitalize;
-  color: var(--color-green-200);
+  color: var(--color-200-green);
 }
 
 poke-input {
