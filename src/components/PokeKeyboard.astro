@@ -45,10 +45,6 @@ import Button from "./Button.astro";
   class PokeKeyboard extends HTMLElement {
     constructor() {
       super();
-      this._typingAudioElement = [
-        new Audio('/typing-sound-1.mp3'),
-        new Audio('/typing-sound-2.mp3'),
-      ];
 
       this._pokeCache = null;
 
@@ -92,10 +88,6 @@ import Button from "./Button.astro";
       return this.querySelectorAll('button');
     }
 
-    get typingAudioElement() {
-      return this._typingAudioElement;
-    }
-
     get typingAudioSources() {
       return this._typingAudioSources;
     }
@@ -107,19 +99,6 @@ import Button from "./Button.astro";
         : this.onPointerUp({currentTarget});
     }
 
-    async typingAudioPlay() {
-      //const typingAudio = this.typingAudioElement[Math.floor(Math.random() * this.typingAudioElement.length)];
-      //typingAudio.load();
-      //typingAudio.play();
-      const audioSrc = this.typingAudioSources[Math.floor(Math.random() * this.typingAudioSources.length)];
-      const response = await this.pokeCache.match(audioSrc);
-      const reader = await response.body.getReader();
-      const {value: chunk } = await reader.read();
-      const mimeType = 'audio/mpeg'
-      const url = URL.createObjectURL(new Blob([chunk.buffer], {type: mimeType}))
-      return new Audio(url);
-    }
-
     dispatchCustomPokeEvent(e) {
       const type = e.currentTarget.dataset.type;
       const key = e.currentTarget.dataset.key;
@@ -127,6 +106,24 @@ import Button from "./Button.astro";
         detail: { key },
         bubbles: true,
       }));
+    }
+
+    async pushCachedSources(sources) {
+      const arr = [];
+      for (const source of sources) {
+        const response = await this.pokeCache.match(source);
+        const reader = await response.body.getReader();
+        const {value: chunk } = await reader.read();
+        const url = URL.createObjectURL(new Blob([chunk.buffer], {type: 'audio/mpeg'}))
+        arr.push(url);
+      }
+      return arr;
+    }
+
+    async pokeCacheInit(sources) {
+      this.pokeCache = await caches.open('poke-cache');
+      this.pokeCache.addAll(sources);
+      this.cachedAudioSources = await this.pushCachedSources(sources);
     }
 
     classIsDownToggle(e) {
@@ -148,7 +145,6 @@ import Button from "./Button.astro";
     onPointerDown(e) {
       if ('vibrate' in navigator) navigator.vibrate(42);
       const audioSrc = this.cachedAudioSources[Math.floor(Math.random() * this.cachedAudioSources.length)];
-      
       const audio = new Audio(audioSrc);
       audio.play();
       this.classIsDownToggle(e);
@@ -160,26 +156,8 @@ import Button from "./Button.astro";
       this.deletegateKeyEventToPointerHandler(e);
     }
 
-    async pushCachedSources() {
-      const arr = [];
-      for (const source of this.typingAudioSources) {
-        const response = await this.pokeCache.match(source);
-        const reader = await response.body.getReader();
-        const {value: chunk } = await reader.read();
-        const url = URL.createObjectURL(new Blob([chunk.buffer], {type: 'audio/mpeg'}))
-        arr.push(url);
-      }
-      return arr;
-    }
-
-    async openNewCache() {
-      this.pokeCache = await caches.open('poke-cache');
-      this.pokeCache.addAll(this.typingAudioSources);
-      this.cachedAudioSources = await this.pushCachedSources();
-    }
-
     connectedCallback() {
-      if ('caches' in window) this.openNewCache();
+      if ('caches' in window) this.pokeCacheInit(this.typingAudioSources);
       document.body.addEventListener('keydown', this.onKeyDownOrUp.bind(this));
       document.body.addEventListener('keyup', this.onKeyDownOrUp.bind(this));
       this.buttons.forEach((button) => {
