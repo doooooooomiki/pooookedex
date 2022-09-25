@@ -51,7 +51,9 @@ poke-display .screen {
 
 poke-display .output {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
+  align-items: center;
 }
 
 poke-display svg {
