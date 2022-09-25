@@ -2,6 +2,9 @@ poke-display {
   --color-display-lite: var(--color-100-gray);
   --color-display-base: var(--color-200-gray);
   --color-display-dark: var(--color-300-gray);
+
+  --color-screen-base: var(--color-100-green);
+  --color-screen-dark: var(--color-200-green);
 }
 
 poke-display[poke-signal="pending"] {
@@ -42,12 +45,17 @@ poke-display .screen {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-display-lite);
-  border-radius: var(--border-radius);
   padding: 8px;
+  position: relative;
 }
 
 poke-display > svg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+poke-display .screen > svg {
   position: absolute;
   inset: 0;
   z-index: -1;
