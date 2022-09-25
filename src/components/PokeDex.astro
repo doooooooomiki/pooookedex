@@ -101,11 +101,14 @@ import PokeKeyboard from "./PokeKeyboard.astro";
 
     onPokeKeyDown(e) {
       if (this.pokeValue.length >= 11) {
-        if ('vibrate' in navigator) navigator.vibrate(666);
-        this.pokeDisplay.setAttribute('poke-signal', 'error');
-
+        this.pokeDisplayUpdateOnError();
         return;
       }
+
+      if (this.pokeDisplay.getAttribute('poke-src')) {
+        this.pokeDisplay.setAttribute('poke-src', '');
+      }
+
       this.pokeDisplay.setAttribute('poke-signal', 'pending');
 
       this.pokeValue += e.detail.key
