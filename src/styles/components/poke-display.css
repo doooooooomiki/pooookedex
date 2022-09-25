@@ -28,11 +28,6 @@ poke-display[poke-signal="error"] {
   --color-signal-deep: var(--color-400-red);
 }
 
-poke-display .signal {
-  left: 32px;
-  bottom: 0;
-}
-
 poke-display {
   height: 384px;
   overflow: hidden;
@@ -59,4 +54,9 @@ poke-display .screen > svg {
   position: absolute;
   inset: 0;
   z-index: -1;
+}
+
+poke-display .signal {
+  left: 56px;
+  top: calc(100% - 44px - 34px);
 }
