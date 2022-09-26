@@ -5,27 +5,28 @@ poke-display {
 
   --color-screen-base: var(--color-100-green);
   --color-screen-dark: var(--color-200-green);
+
+  --color-signal-hint: var(--color-300-gray);
+  --color-signal-dark: var(--color-600-gray);
+  --color-signal-deep: var(--color-700-gray);
 }
 
 poke-display[poke-signal="pending"] {
-  --color-signal-lite: var(--color-100-yellow);
-  --color-signal-base: var(--color-200-yellow);
-  --color-signal-dark: var(--color-300-yellow);
-  --color-signal-deep: var(--color-400-yellow);
+  --color-signal-lite: var(--color-display-base);
+  --color-signal-base: var(--color-display-dark);
+  --color-signal-light: transparent;
 }
 
 poke-display[poke-signal="success"] {
   --color-signal-lite: var(--color-100-green);
   --color-signal-base: var(--color-200-green);
-  --color-signal-dark: var(--color-300-green);
-  --color-signal-deep: var(--color-400-green);
+  --color-signal-light: var(--color-400-green);
 }
 
 poke-display[poke-signal="error"] {
   --color-signal-lite: var(--color-100-red);
   --color-signal-base: var(--color-200-red);
-  --color-signal-dark: var(--color-300-red);
-  --color-signal-deep: var(--color-400-red);
+  --color-signal-light: var(--color-300-red);
 }
 
 poke-display {
@@ -34,11 +35,38 @@ poke-display {
   margin: 0 8px 8px;
   padding: 56px 56px 96px;
   position: relative;
+  overflow: visible;
 }
 
 poke-display .signal {
-  left: 56px;
-  top: calc(100% - 44px - 34px);
+  top: calc(100% - 44px - 44px);
+  left: 78px;
+  transform: translateX(-50%);
+}
+
+poke-display .signal-light {
+  width: 176px;
+  height: 176px;
+  top: calc(100% - 44px - 110px);
+  left: -10px;
+  z-index: 666;
+  position: absolute;
+  mix-blend-mode: multiply;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+      circle,
+      transparent 21px,
+      var(--color-signal-light) 21px,
+      transparent 64px
+    ),
+    url("/noise.svg");
+  filter: contrast(150%) brightness(160%);
+}
+
+poke-display .signal svg {
+  position: relative;
 }
 
 poke-display .screen {
