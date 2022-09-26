@@ -20,12 +20,16 @@
 
   --color-100-blue: #7bd0de;
   --color-200-blue: #23b1c9;
+  --color-200-blue-rgb: 35, 177, 201;
   --color-300-blue: #309daf;
+  --color-300-blue-rgb: 48, 157, 175;
   --color-400-blue: #348997;
 
   --color-100-green: #92dbcb;
   --color-200-green: #21b698;
+  --color-200-green-rgb: 33, 182, 152;
   --color-300-green: #2ba188;
+  --color-300-green-rgb: 3, 161, 136;
   --color-400-green: #227b68;
 
   --color-100-gray: #eae7e7;
@@ -33,6 +37,7 @@
   --color-300-gray: #b6b4b4;
   --color-400-gray: #858585;
   --color-500-gray: #666666;
+  --color-500-gray-rgb: 102, 102, 102;
   --color-600-gray: #5c5c5c;
   --color-700-gray: #4d4d4d;
 
@@ -50,7 +55,6 @@ html {
 
 body {
   height: 100%;
-  background-color: var(--color-400-red);
   overflow-y: hidden;
   font-family: pokefont;
   background: linear-gradient(

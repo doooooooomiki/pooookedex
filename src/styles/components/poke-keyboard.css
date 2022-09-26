@@ -38,25 +38,30 @@ poke-keyboard button {
 }
 
 poke-keyboard button {
-  background-color: var(--color-button-base);
+  background: linear-gradient(
+      to bottom,
+      rgba(var(--color-button-base), 0.8) 0%,
+      rgba(var(--color-button-base), 0.8) 100%
+    ),
+    url("/noise.svg");
   box-shadow: inset -6px -6px 0px 0px var(--color-button-dark);
 }
 
 poke-keyboard button[data-type="key"] {
   --color-button-lite: var(--color-100-blue);
-  --color-button-base: var(--color-200-blue);
+  --color-button-base: var(--color-200-blue-rgb);
   --color-button-dark: var(--color-300-blue);
 }
 
 poke-keyboard button[data-type="enter"] {
   --color-button-lite: var(--color-100-green);
-  --color-button-base: var(--color-200-green);
+  --color-button-base: var(--color-200-green-rgb);
   --color-button-dark: var(--color-300-green);
 }
 
 poke-keyboard button[data-type="backspace"] {
   --color-button-lite: var(--color-400-gray);
-  --color-button-base: var(--color-500-gray);
+  --color-button-base: var(--color-500-gray-rgb);
   --color-button-dark: var(--color-600-gray);
 }
 
