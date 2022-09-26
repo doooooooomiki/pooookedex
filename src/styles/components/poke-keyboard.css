@@ -41,7 +41,7 @@ poke-keyboard button {
   background: linear-gradient(
       to bottom,
       rgba(var(--color-button-base), 0.8) 0%,
-      rgba(var(--color-button-base), 0.8) 100%
+      rgba(var(--color-button-base), 0.7) 100%
     ),
     url("/noise.svg");
   box-shadow: inset -6px -6px 0px 0px var(--color-button-dark);
