@@ -61,3 +61,7 @@ poke-display svg {
   inset: 0;
   z-index: -1;
 }
+
+poke-display img {
+  opacity: 0.7;
+}
