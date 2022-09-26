@@ -15,6 +15,7 @@
   --color-200-red: #e05959;
   --color-300-red: #d94a4a;
   --color-400-red: #bc4343;
+  --color-400-red-rgb: 188, 67, 67;
   --color-500-red: #aa3535;
 
   --color-100-blue: #7bd0de;
@@ -52,6 +53,12 @@ body {
   background-color: var(--color-400-red);
   overflow-y: hidden;
   font-family: pokefont;
+  background: linear-gradient(
+      to bottom,
+      rgba(var(--color-400-red-rgb), 0.9) 0%,
+      rgba(var(--color-400-red-rgb), 0.9) 100%
+    ),
+    url("/noise.svg");
 }
 
 header {
