@@ -6,7 +6,6 @@
 
 :root {
   --height-keyboard: 192px;
-  --height-header: 40px;
   --height-input: 56px;
   --height-button: 56px;
 
@@ -55,6 +54,8 @@ html {
 }
 
 body {
+  display: flex;
+  align-items: center;
   height: 100%;
   overflow-y: hidden;
   font-family: pokefont;
@@ -64,8 +65,4 @@ body {
       rgba(var(--color-400-red-rgb), 0.9) 100%
     ),
     url("/noise.svg");
-}
-
-header {
-  height: var(--height-header);
 }

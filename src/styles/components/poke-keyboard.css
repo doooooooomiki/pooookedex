@@ -16,10 +16,11 @@ poke-keyboard .row {
 poke-keyboard button {
   font-family: inherit;
   font-weight: bold;
+  font-size: 14px;
   border: 0;
   padding: 0;
   margin: 0 6px 0 0;
-  height: var(--height-button);
+  height: 48px;
   border-radius: var(--border-radius);
   cursor: pointer;
   user-select: none;
@@ -28,6 +29,12 @@ poke-keyboard button {
   text-transform: uppercase;
 
   position: relative;
+}
+
+@media (min-width: 440px) {
+  poke-keyboard button {
+    height: 56px;
+  }
 }
 
 poke-keyboard button {
@@ -45,6 +52,12 @@ poke-keyboard button {
     ),
     url("/noise.svg");
   box-shadow: inset -6px -6px 0px 0px var(--color-button-dark);
+}
+
+@media (min-width: 440px) {
+  poke-keyboard button {
+    font-size: 16px;
+  }
 }
 
 poke-keyboard button[data-type="key"] {
@@ -93,5 +106,11 @@ poke-keyboard .small {
 
 poke-keyboard .big {
   flex: 1.5;
-  font-size: 8px;
+  font-size: 6px;
+}
+
+@media (min-width: 440px) {
+  poke-keyboard .big {
+    font-size: 8px;
+  }
 }
